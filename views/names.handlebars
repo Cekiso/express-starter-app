@@ -1,6 +1,8 @@
 <h1>Names</h1>
 
-
+<div class="space_below">
+	<a href="/add">Add pizza</a>
+</div>
 Name count: {{names.length}}
 
 {{code}}
@@ -10,7 +12,7 @@ Name count: {{names.length}}
 		<th>First name</th>
 		<th>Last name</th>
 	</tr>
-	
+
 	{{#each names}}
 	<tr>
 		<td>
@@ -21,5 +23,8 @@ Name count: {{names.length}}
 		</td>
 	</tr>
 	{{/each}}
+	<td>
+		<a href="/edit">Edit</a>
 
+	</td>
 </table>

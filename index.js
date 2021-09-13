@@ -1,12 +1,28 @@
 const express = require('express');
-const exphbs  = require('express-handlebars');
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+
+var session = require('express-session')
+
 
 const app = express();
-const PORT =  process.env.PORT || 3017;
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
+
+app.use(session({
+    secret: "<add a secret string here>",
+    resave: false,
+    saveUninitialized: true
+}));
+const PORT = process.env.PORT || 3017;
 
 // enable the req.body object - to allow us to use HTML forms
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+    extended: false
+}));
 
 // enable the static folder...
 app.use(express.static('public'));
@@ -18,19 +34,40 @@ app.set('view engine', 'handlebars');
 
 let counter = 0;
 
+
 app.get('/', function(req, res) {
-	res.render('index', {
-		counter
-	});
+    res.render('index', {
+        counter
+    });
 });
 
 app.post('/count', function(req, res) {
-	counter++;
-	res.redirect('/')
+    counter++;
+    res.redirect('/')
 });
 
+app.get('/info', function(req, res) {
+    res.render('names', {
 
-// start  the server and start listening for HTTP request on the PORT number specified...
+    })
+})
+app.get('/add', function(req, res) {
+    res.render('info', {
+
+    })
+})
+app.post('/add', function(req, res) {
+    res.redirect('/info');
+})
+
+app.get('/edit', function(req, res) {
+    res.render('info');
+
+})
+app.post('/edit', function(req, res) {
+        res.redirect('/info');
+    })
+    // start  the server and start listening for HTTP request on the PORT number specified...
 app.listen(PORT, function() {
-	console.log(`App started on port ${PORT}`)
+    console.log(`App started on port ${PORT}`)
 });
